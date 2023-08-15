@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link rel="stylesheet" href="./jquery-ui-1.13.2.custom/jquery-ui.theme.css">
+    <link rel="stylesheet" href="./jquery-ui-1.13.2.custom/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <style>
+        #drop {
+            width: 150px;
+            height: 150px;
+            padding: 0.5em;
+            /* float: right; */
+            margin: 20px;
+        }
+        
+        .drag {
+            width: 70px;
+            height: 70px;
+            padding: 0.5em;
+            /* float: left; */
+            margin: 20px;
+            color: red;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="drag1" class="drag ui-widget-content">
+        item 1
+    </div>
+    <div id="drag2" class="drag ui-widget-content">
+        item 2
+    </div>
+    <div id="drag3" class="drag ui-widget-content">
+        item 3
+    </div>
+    <div id="drop" class="ui-widget-content">
+        <p>destination!</p>
+    </div>
+
+
+    <script>
+        $(function() {
+            let draggedInside = 0
+            $(".drag").draggable()
+            $("#drop").droppable({
+                drop: function(event, ui) {
+                    draggedInside++
+                    // console.log(draggedInside)
+                    if(draggedInside === $(".drag").length) {
+                        $(this).addClass("ui-state-highlight").html("all items dropped!")
+                    }
+                },
+                out: function(event, ui) {
+                    draggedInside--
+                    $(this).removeClass("ui-state-highlight").html("destination!")
+                }
+            })
+        })
+    </script>
+</body>
+</html>
